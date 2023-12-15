@@ -17,20 +17,19 @@ const chainMaker = {
     return this;
   },
   removeLink(position) {
-    try {
-      if (
-        position > 0 &&
-        this.chainLinks[position - 1] &&
-        typeof position === 'number'
-      ) {
-        const newArray = this.chainLinks.filter(
-          (_, index) => index !== position - 1
-        );
-        this.chainLinks = [...newArray];
-        return this;
-      } else throw new Error("You can't remove incorrect link!");
-    } catch (err) {
-      console.error(err);
+    if (
+      position > 0 &&
+      this.chainLinks[position - 1] &&
+      typeof position === 'number'
+    ) {
+      const newArray = this.chainLinks.filter(
+        (_, index) => index !== position - 1
+      );
+      this.chainLinks = [...newArray];
+      return this;
+    } else {
+      this.createEmptyArray();
+      throw new Error("You can't remove incorrect link!");
     }
   },
   reverseChain() {
@@ -42,12 +41,15 @@ const chainMaker = {
   finishChain() {
     const result = this.chainLinks.map((link) => link.chainLink).join('~~');
     try {
-      throw new Error();
-    } catch (err) {
-      this.chainLinks = [];
-    } finally {
       return result;
+    } catch (err) {
+    } finally {
+      this.createEmptyArray();
     }
+  },
+
+  createEmptyArray() {
+    this.chainLinks = [];
   },
 };
 
