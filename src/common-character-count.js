@@ -15,22 +15,24 @@ function getCommonCharacterCount(s1, s2) {
   // throw new NotImplementedError('Not implemented');
   // remove line with error and write your code here
 
-  let commons = [];
   const firstArray = s1.split('');
   const secondArray = s2.split('');
 
-  firstArray.forEach((elemFirst) => {
+  let commons = [];
+  let indexes = [];
+
+  firstArray.forEach((firstElement) => {
     for (let i = 0; i < secondArray.length; i++) {
-      let elemSecond = secondArray[i];
-      if (elemFirst === elemSecond) {
-        commons.push(elemFirst);
+      let secondElement = secondArray[i];
+      if (firstElement === secondElement && !indexes.includes(i)) {
+        commons.push(firstElement);
+        indexes.push(i);
         break;
       }
     }
   });
 
-  const uniqueCommons = new Set(commons);
-  return Array.from(uniqueCommons).length;
+  return commons.length;
 }
 
 module.exports = {
